@@ -1,0 +1,19 @@
+feat_extractor:
+  feature_dim: 16
+  patch_size: 1
+  input_c: 3
+  m: 32
+  block_reps: 2
+  layers: [32, 64, 128]
+  window_size_sphere: [2, 2, 80]
+  drop_path_rate: 0.3
+  window_size_scale: [2.0, 1.5]
+  sphere_layers: [1,2,3,4,5]
+  a: 0.0125
+
+aggregator:
+  tokens: 512
+  out_channels: 128
+  mix_depth: 4
+  mlp_ratio: 1
+  out_d: 4

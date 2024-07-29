@@ -1,0 +1,4 @@
+# Ignore large files
+src/checkpoints/
+*.pth
+*__pycache__/

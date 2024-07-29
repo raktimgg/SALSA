@@ -1,0 +1,8 @@
+batch_size: 12
+writer_loc: 'runs/SALSA'
+cached_queries: 1000
+device: 'cuda'
+max_epoch: 50
+lr: 0.001
+max_lr: 0.005
+outdim: 512

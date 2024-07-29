@@ -1,0 +1,7 @@
+torch_geometric
+spconv-cu117
+cumm-cu117
+tensorboard
+open3d
+python-lzf
+faiss-gpu
