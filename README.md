@@ -1,4 +1,7 @@
 # SALSA: Swift Adaptive Lightweight Self-Attention for Enhanced LiDAR Place Recognition
+- IEEE Robotics and Automation Letters (to appear)
+- Paper pre-print: [https://arxiv.org/abs/2407.08260](https://arxiv.org/abs/2407.08260)
+
 Authors: Raktim Gautam Goswami , Naman Patel, Prashanth Krishnamurthy, Farshad Khorrami 
 
 Control/Robotics Research Laboratory (CRRL), Department of Electrical and Computer Engineering, NYU Tandon School of Engineering
