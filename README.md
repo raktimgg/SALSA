@@ -1,21 +1,30 @@
 # SALSA: Swift Adaptive Lightweight Self-Attention for Enhanced LiDAR Place Recognition
-- IEEE Robotics and Automation Letters [https://ieeexplore.ieee.org/document/10629049](https://ieeexplore.ieee.org/document/10629049)
-- Paper pre-print: [https://arxiv.org/abs/2407.08260](https://arxiv.org/abs/2407.08260)
 
-Authors: Raktim Gautam Goswami , Naman Patel, Prashanth Krishnamurthy, Farshad Khorrami 
+📖 Paper: [`RA-L`](https://ieeexplore.ieee.org/document/10629049)
 
-Control/Robotics Research Laboratory (CRRL), Department of Electrical and Computer Engineering, NYU Tandon School of Engineering
+📖 Pre-print: [``arXiv``](https://arxiv.org/abs/2407.08260)
 
-### Abstract
-Large-scale LiDAR mappings and localization leverage place recognition techniques to mitigate odometry drifts, ensuring accurate mapping. These techniques utilize scene from LiDAR point clouds to identify previously visited sites within a database. Local descriptors, assigned to each point within a point cloud, are aggregated to form a scene representation for the point cloud. These descriptors are also used to re-rank the retrieved point clouds based on geometric fitness scores. We propose SALSA, a novel, lightweight, and efficient framework for LiDAR place recognition. It consists of a Sphereformer backbone that uses radial window attention to enable information aggregation for sparse distant points, an adaptive self-attention layer to pool local descriptors into tokens, and a multi-layer-perceptron Mixer layer for aggregating the tokens to generate a scene descriptor. The proposed framework outperforms existing methods on various LiDAR place recognition datasets in terms of both retrieval and metric localization while operating in real-time.
+📹 Video: [`Youtube`](https://www.youtube.com/watch?v=JLunemW91bQ)
+
+#### Authors: Raktim Gautam Goswami, Naman Patel, Prashanth Krishnamurthy, Farshad Khorrami 
+
+#### Control/Robotics Research Laboratory (CRRL), Department of Electrical and Computer Engineering, NYU Tandon School of Engineering
+
+### 💡 Contributions
+- **SALSA**: A novel, lightweight, and efficient framework for LiDAR place recognition that delivers state-of-the-art performance while maintaining real-time operational capabilities.
+- **SphereFormer**: Utilized for local descriptor extraction with radial and cubic window attention to boost localization performance for sparse distant points.
+- **Adaptive Pooling**: A self-attention adaptive pooling module to fuse local descriptors into global tokens. It can aggregate arbitrary numbers of points in a point cloud without pre-processing.
+
+- **MLP Mixer Token Aggregator**: An MLP mixer-based aggregator to iteratively incorporate global context information to generate a robust global scene descriptor.
+
 
 <center>
 <img src="assets/architecture.png" alt="Alt text" />
-<p>Fig. 1: Overview of our SALSA framework to generate scene descriptors from point clouds for place recognition. A SphereFormer backbone with radial and cubic window attention is employed to extract local descriptors from point clouds. These local descriptors are fused into tokens via a self-attention adaptive pooling module. Subsequently, the pooled tokens are processed by an MLP mixer-based aggregator to iteratively incorporate global context information. Finally, a PCA whitening layer reduces the dimension and decorrelates the aggregated descriptor, producing the global scene descriptor.</p>
+<p>Fig. 1: Overview of our SALSA framework to generate scene descriptors from point clouds for place recognition.</p>
 </center>
 
 
-### Environment creation
+### 🔨 Environment creation
 
 ```bash
 conda create --name salsa python=3.10.11
@@ -30,7 +39,7 @@ pip install --no-deps timm==0.9.7
 Install [SpTr](https://github.com/dvlab-research/SparseTransformer) from source.
 
 
-### Dataset Download
+### 📊💾 Dataset Download
 The model is trained on Mulran Sejong 01/02 sequences and Apollo Southbay (excluding Sunnyvale). Evaluation is performed on 'easy set': Apollo-Southbay (Sunnyvale), SemanticKITTI, Mulran Sejong, and 'hard set': Mulran DCC1/DCC2, KITTI360, ALITA. The datasets can be downloaded from the following links.
 - [MulRan](https://sites.google.com/view/mulran-pr/download) dataset: ground truth data (*.csv) and LiDAR point clouds (Ouster.zip).
 - [Apollo-Southbay](https://developer.apollo.auto/southbay.html) dataset.
@@ -39,7 +48,7 @@ The model is trained on Mulran Sejong 01/02 sequences and Apollo Southbay (exclu
 - [KITTI-360](https://www.cvlibs.net/datasets/kitti-360/user_login.php) dataset (raw velodyne scans, calibrations and vehicle poses).
 
 
-### Dataset Pickle Creation
+### 📊💾 Dataset Pickle Creation
 
 Create Training Pickle
 
@@ -59,7 +68,7 @@ python kitti360/generate_evaluation_sets.py --dataset_root <path_to_kitti360_dat
 python alita/generate_evaluation_sets.py --dataset_root <path_to_alita_dataset>
 ```
 
-### Training
+### ✈️ Training
 Navigate to the base, create a folder inside src named checkpoints to save the trained models directory and start training.
 To change the model and training parameters, change them in config/model.yaml and config/train.yaml, respectively.
 ```bash
@@ -68,21 +77,21 @@ python src/train.py
 ```
 This will train the model on the generated training dataset and store the saved models for each epoch in src/checkpoints.
 
-### PCA
+### ✈️ PCA
 Learn PCA using trained model
 ```bash
 python src/evaluate/pca.py
 ```
 This will learn a PCA to compress and decorrelate the scene descriptor and store the learned PCA as a pytorch model in src/checkpoints.
 
-### Evaluation
+### ✈️ Evaluation
 ```bash
 python src/evaluate/SALSA/eval_salsa_sgv.py --dataset_root <path_to_dataset> --dataset_type <name_of_dataset> --only_global True
 ```
 Our pre-trained models can also be downloaded from this [link](https://drive.google.com/drive/folders/1lehq0Hki75i7U_Twhd5uxxz37WvcRzGa?usp=sharing). After downloading, copy the contents into the 'src/checkpoints' directory.
 
 
-### Results
+### 📝 Results
 The spreads of the Recall@1 before and after re-ranking for best-performing models are plotted in the following figure.
 <div style="text-align: center;">
     <div>
@@ -97,7 +106,7 @@ The spreads of the Recall@1 before and after re-ranking for best-performing mode
 </div>
 
 
-### Visualizations
+### 🌈 Visualizations
 <center>
 <img src="assets/attention_diagram2.png" alt="Alt text" width="60%" />
 <p>Fig. 3: Visualization of areas attended to by different tokens from the adaptive pooling layer. Each token focuses on different geometries: trees and traffic signs (green), road intersections (red), and distant points (blue).</p>
@@ -123,3 +132,15 @@ The spreads of the Recall@1 before and after re-ranking for best-performing mode
     </div>
     <p style="text-align: center;">Fig. 5: Comparison of LiDAR-only odometry and maps: (a) without loop detection, and (b) after online pose graph optimization from SALSA loop detections. The highlighted rectangles emphasize the map and odometry disparities due to loop closures.</p>
 </div>
+
+## 📧 Citation
+
+If you find our work useful in your research please consider citing our publication:
+```bibtex
+@article{goswami2024salsa,
+  title={SALSA: Swift Adaptive Lightweight Self-Attention for Enhanced LiDAR Place Recognition},
+  author={Goswami, Raktim Gautam and Patel, Naman and Krishnamurthy, Prashanth and Khorrami, Farshad},
+  journal={IEEE Robotics and Automation Letters},
+  year={2024},
+}
+```
